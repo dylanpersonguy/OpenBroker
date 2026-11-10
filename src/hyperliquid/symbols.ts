@@ -4,7 +4,7 @@ import type { HlAssetMeta, HlMarginTable, InfoClient } from "./info.ts";
 import type { HlCategory, HlMarket, MarketRegistry } from "./types.ts";
 
 /**
- * Market registry + Hyperliquid -> OpenCharts symbol mapping + the pure
+ * Market registry + Hyperliquid -> OpenBroker symbol mapping + the pure
  * price/size formatters the trading code relies on.
  *
  * ASSET ID EVIDENCE (verified 2026-11):
@@ -315,7 +315,7 @@ export function createMarketRegistry(info: InfoClient, now: () => number = Date.
   };
 }
 
-// ── OpenCharts mapping ────────────────────────────────────
+// ── OpenBroker mapping ────────────────────────────────────
 
 export function marketToSymbol(m: HlMarket, midPx?: number): OcSymbol {
   const tickSize = priceTickSize(midPx, m.szDecimals);
@@ -339,7 +339,7 @@ export function marketToSymbol(m: HlMarket, midPx?: number): OcSymbol {
   };
 }
 
-export function toOpenChartsSymbols(
+export function toOpenBrokerSymbols(
   markets: readonly HlMarket[],
   mids: Readonly<Record<string, number>> = {},
 ): OcSymbol[] {

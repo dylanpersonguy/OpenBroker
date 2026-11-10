@@ -8,15 +8,15 @@ import { cn } from "../lib/utils.ts";
 import { useAuthStore, useTradingStore } from "../services/store.tsx";
 import { wsClient } from "../services/ws.ts";
 import { setAdapter } from "./registry.ts";
-import type { OpenChartsAdapter } from "./types.ts";
+import type { OpenBrokerAdapter } from "./types.ts";
 
 /**
- * The OpenCharts runtime.
+ * The OpenBroker runtime.
  *
  * ```tsx
- * <OpenChartsProvider adapter={myAdapter}>
+ * <OpenBrokerProvider adapter={myAdapter}>
  *   <Terminal />
- * </OpenChartsProvider>
+ * </OpenBrokerProvider>
  * ```
  *
  * That is the whole integration. The provider installs the adapter, opens the
@@ -25,12 +25,12 @@ import type { OpenChartsAdapter } from "./types.ts";
  * bridge that turns stream events into state, notifications and an error
  * boundary. None of it has to be assembled by the host.
  *
- * It also renders the `.opencharts` element every stylesheet rule is scoped
+ * It also renders the `.openbroker` element every stylesheet rule is scoped
  * to, so the terminal's styles cannot leak onto the host page.
  */
 
-export interface OpenChartsProviderProps {
-  adapter: OpenChartsAdapter;
+export interface OpenBrokerProviderProps {
+  adapter: OpenBrokerAdapter;
   children: ReactNode;
   /** Shown while the adapter's instruments and accounts load. */
   fallback?: ReactNode;
@@ -74,7 +74,7 @@ type BootState = { status: "loading" } | { status: "ready" } | { status: "error"
  * Connect the stream and load what every panel needs before rendering them.
  * Re-runs when the adapter changes.
  */
-function useBoot(adapter: OpenChartsAdapter, attempt: number): BootState {
+function useBoot(adapter: OpenBrokerAdapter, attempt: number): BootState {
   const [state, setState] = useState<{ key: unknown; boot: BootState }>({
     key: null,
     boot: { status: "loading" },
@@ -107,7 +107,7 @@ function useBoot(adapter: OpenChartsAdapter, attempt: number): BootState {
       .catch((err: unknown) => {
         if (cancelled) return;
         const error = err instanceof Error ? err : new Error(String(err));
-        console.error("[opencharts] adapter failed to load", error);
+        console.error("[openbroker] adapter failed to load", error);
         setState({ key: adapter, boot: { status: "error", error } });
       });
 
@@ -124,7 +124,7 @@ function useBoot(adapter: OpenChartsAdapter, attempt: number): BootState {
 function DefaultFallback() {
   return (
     <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-      Loading OpenCharts…
+      Loading OpenBroker…
     </div>
   );
 }
@@ -153,7 +153,7 @@ function Runtime({
   fallback,
   children,
 }: {
-  adapter: OpenChartsAdapter;
+  adapter: OpenBrokerAdapter;
   fallback: ReactNode;
   children: ReactNode;
 }) {
@@ -167,7 +167,7 @@ function Runtime({
   return <>{children}</>;
 }
 
-export function OpenChartsProvider({
+export function OpenBrokerProvider({
   adapter,
   children,
   fallback = <DefaultFallback />,
@@ -175,13 +175,13 @@ export function OpenChartsProvider({
   style,
   queryClient,
   showNotifications = true,
-}: OpenChartsProviderProps) {
+}: OpenBrokerProviderProps) {
   const [ownClient] = useState(createQueryClient);
   const client = queryClient ?? ownClient;
 
   // Install the adapter during render (the documented "adjust state when a
   // prop changes" pattern) so children never render against the wrong one.
-  const [installed, setInstalled] = useState<OpenChartsAdapter | null>(null);
+  const [installed, setInstalled] = useState<OpenBrokerAdapter | null>(null);
   if (installed !== adapter) {
     setAdapter(adapter);
     setInstalled(adapter);
@@ -197,7 +197,7 @@ export function OpenChartsProvider({
     <QueryClientProvider client={client}>
       <TooltipProvider delayDuration={300}>
         <div
-          className={cn("opencharts", className)}
+          className={cn("openbroker", className)}
           style={{ position: "relative", height: "100%", width: "100%", ...style }}
         >
           {installed === adapter && (

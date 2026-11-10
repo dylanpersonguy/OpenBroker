@@ -9,7 +9,7 @@ import { useAccountSync } from "./useAccountSync.ts";
 /**
  * Everything the Hyperliquid experience needs around `<Terminal />`: the top
  * bar (connect / deposit), the remote fee banner, account syncing and the
- * dialog host. Render it INSIDE `<OpenChartsProvider adapter={createHyperliquidAdapter()}>`.
+ * dialog host. Render it INSIDE `<OpenBrokerProvider adapter={createHyperliquidAdapter()}>`.
  *
  * On mount it starts fee-config polling and silently restores a previously
  * authorised wallet. It never opens a modal by itself.

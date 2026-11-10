@@ -8,7 +8,7 @@ import type { Order, PlaceOrderInput, Position } from "../services/schemas.ts";
 import type {
   CandleRequest,
   MarketEvent,
-  OpenChartsAdapter,
+  OpenBrokerAdapter,
   OrderModification,
   PositionModification,
   TradingEvent,
@@ -74,7 +74,7 @@ const ORDER_EVENTS: Record<string, TradingEvent["type"]> = {
   OrderModified: "order.placed",
 };
 
-export function createDemoAdapter(): OpenChartsAdapter {
+export function createDemoAdapter(): OpenBrokerAdapter {
   return {
     name: "demo",
 

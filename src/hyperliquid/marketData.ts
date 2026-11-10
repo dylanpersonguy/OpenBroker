@@ -9,13 +9,13 @@ import type {
 import type { Candle, Symbol as OcSymbol } from "../services/schemas.ts";
 import { createInfoClient } from "./info.ts";
 import type { HlRawCandle, InfoClient } from "./info.ts";
-import { createMarketRegistry, toOpenChartsSymbols } from "./symbols.ts";
+import { createMarketRegistry, toOpenBrokerSymbols } from "./symbols.ts";
 import type { HlMarket, MarketRegistry } from "./types.ts";
 import { createHlSocket } from "./ws.ts";
 import type { HlSocket } from "./ws.ts";
 
 /**
- * Live, read-only Hyperliquid market data for the OpenCharts adapter contract.
+ * Live, read-only Hyperliquid market data for the OpenBroker adapter contract.
  *
  * History: `candleSnapshot` returns at most the most recent ~5000 candles per
  * interval (verified live: 1m/1h/1d/1w all cap near 5000; windows entirely
@@ -65,7 +65,7 @@ export type HyperliquidMarketData = MarketDataSource & {
   socket: HlSocket;
 };
 
-/** Map one raw HL candle to an OpenCharts candle (time in seconds). */
+/** Map one raw HL candle to an OpenBroker candle (time in seconds). */
 export function toCandle(c: HlRawCandle): Candle {
   return {
     time: Math.floor(c.t / 1000),
@@ -383,7 +383,7 @@ export function createHyperliquidMarketData(
         if (Number.isFinite(n) && n > 0) mids[coin] = n;
       }
     }
-    return toOpenChartsSymbols(markets, mids);
+    return toOpenBrokerSymbols(markets, mids);
   }
 
   // ── Public surface ──────────────────────────────────────

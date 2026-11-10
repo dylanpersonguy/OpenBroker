@@ -3,7 +3,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { __clearAdapter, setAdapter } from "../../adapter/registry.ts";
-import type { OpenChartsAdapter } from "../../adapter/types.ts";
+import type { OpenBrokerAdapter } from "../../adapter/types.ts";
 import type { HlL2Book } from "../info.ts";
 import { hlSession } from "../session.ts";
 import type { HlMarket } from "../types.ts";
@@ -55,7 +55,7 @@ function install(info?: unknown) {
       },
     },
     trading: { setLeverage: vi.fn().mockResolvedValue(undefined), getLeverage: vi.fn().mockResolvedValue({ leverage: 5, isCross: true, maxLeverage: 40 }) },
-  } as unknown as OpenChartsAdapter);
+  } as unknown as OpenBrokerAdapter);
 }
 
 beforeEach(() => {

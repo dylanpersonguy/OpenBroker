@@ -96,7 +96,7 @@ Geo/screen/fee-config URLs must be reachable under the CSP. The production build
 ### 1.10 Trademarks and branding
 - "Hyperliquid" is a third party's name. May we use it in the product name, domain, logo, app-store listing and ads? Use plain nominative references ("trade on Hyperliquid") with a non-affiliation disclaimer ("Not affiliated with or endorsed by Hyperliquid") unless there is permission. Avoid look-alike names and logos.
 - Check names of HIP-3 deployers and underlying brands (tickers, stock logos) before showing logos or marketing them.
-- Clear "OpenBroker"/"OpenCharts" naming and licences (MIT code; brand marks are separate).
+- Clear "OpenBroker"/"OpenBroker" naming and licences (MIT code; brand marks are separate).
 
 ## 2. Practical pre-launch checklist
 

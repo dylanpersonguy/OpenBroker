@@ -5,7 +5,7 @@ import { toast, type ToastPayload } from "./services/toast.ts";
  * validation warnings — as a stream a host can consume.
  *
  * Use it to route messages into your own notification system; pair it with
- * `<OpenChartsProvider showNotifications={false}>` to turn the built-in ones
+ * `<OpenBrokerProvider showNotifications={false}>` to turn the built-in ones
  * off.
  *
  * ```ts

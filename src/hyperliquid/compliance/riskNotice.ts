@@ -62,7 +62,7 @@ export function noticeForSymbol(symbol: string): MarketRiskNotice | null {
 }
 
 /**
- * Risk notice for an OpenCharts symbol string ("BTC", "xyz:TSLA").
+ * Risk notice for an OpenBroker symbol string ("BTC", "xyz:TSLA").
  * Uses the registered registry when available (gives leverage / isolated info);
  * otherwise derives dex and category from the symbol alone.
  */

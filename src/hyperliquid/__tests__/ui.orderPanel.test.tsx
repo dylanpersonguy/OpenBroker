@@ -3,7 +3,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { __clearAdapter, setAdapter } from "../../adapter/registry.ts";
-import type { OpenChartsAdapter } from "../../adapter/types.ts";
+import type { OpenBrokerAdapter } from "../../adapter/types.ts";
 import { HlOrderPanel } from "../ui/HlOrderPanel.tsx";
 import { hlSession } from "../session.ts";
 import { useHlUi } from "../ui/uiStore.ts";
@@ -59,7 +59,7 @@ function installAdapter() {
       },
     },
     trading: { setLeverage, getLeverage },
-  } as unknown as OpenChartsAdapter;
+  } as unknown as OpenBrokerAdapter;
   setAdapter(adapter);
 }
 

@@ -19,7 +19,7 @@ import type { Account, Candle, Order, PlaceOrderInput, Position, Symbol } from "
  * Everything in the terminal reads and writes through this object, and every
  * method here resolves against whatever adapter is installed (see
  * `src/adapter/`). Applications never implement this shape — they implement
- * the much smaller `OpenChartsAdapter` contract, and this layer maps it onto
+ * the much smaller `OpenBrokerAdapter` contract, and this layer maps it onto
  * the calls the UI has always made.
  *
  * Keeping the mapping in one place means the public contract can stay small and
@@ -44,7 +44,7 @@ function trading() {
   const gateway = getAdapter().trading;
   if (!gateway) {
     throw new ApiError(
-      "This OpenCharts adapter provides market data only — trading is not available.",
+      "This OpenBroker adapter provides market data only — trading is not available.",
       501,
       "TRADING_UNSUPPORTED",
     );
@@ -159,7 +159,7 @@ const candlesPayload = (candles: Candle[]): MarketDataCandlesPayload => ({
 
 const DEMO_USER = {
   id: "demo-user",
-  email: "demo@opencharts.dev",
+  email: "demo@openbroker.dev",
   firstName: "Demo",
   lastName: "Trader",
   roles: ["trader"],
@@ -176,7 +176,7 @@ const authResponse = (): AuthResponse => ({
 
 export const api = {
   // ── Session ──
-  // OpenCharts ships no authentication: the host application owns identity and
+  // OpenBroker ships no authentication: the host application owns identity and
   // decides what its adapter exposes. These keep the existing store happy.
   login: (_email: string, _password: string): Promise<AuthResponse> =>
     Promise.resolve(authResponse()),

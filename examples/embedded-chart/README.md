@@ -5,17 +5,17 @@ something else — a chart inside your own dashboard, a chart beside your own
 order form — mount the panels individually instead.
 
 ```tsx
-<OpenChartsProvider adapter={myAdapter}>
+<OpenBrokerProvider adapter={myAdapter}>
   <TerminalProvider>
     <Chart />
     <OrderTicket />
   </TerminalProvider>
-</OpenChartsProvider>
+</OpenBrokerProvider>
 ```
 
 Two rules:
 
-1. **`OpenChartsProvider`** installs your data and trading backend.
+1. **`OpenBrokerProvider`** installs your data and trading backend.
 2. **`TerminalProvider`** holds the state the panels share — the charted symbol,
    the timeframe, the account, drawings, positions — so selecting a symbol in
    the watchlist moves the chart, and an order from the ticket appears in
@@ -40,6 +40,6 @@ Layout is entirely yours: neither provider carries sizes, tabs or visibility.
 
 ## Running it against your own backend
 
-Swap `createDemoAdapter()` for your implementation of `OpenChartsAdapter` —
+Swap `createDemoAdapter()` for your implementation of `OpenBrokerAdapter` —
 see the [adapter contract](../../src/adapter/types.ts) and the
 [Binance example](../binance-adapter/) for a live one.

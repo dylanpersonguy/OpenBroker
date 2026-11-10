@@ -1,6 +1,6 @@
-# Contributing to OpenCharts
+# Contributing to OpenBroker
 
-Thanks for being here. OpenCharts is a community project with no gatekeeping
+Thanks for being here. OpenBroker is a community project with no gatekeeping
 core team — issues, pull requests, questions and design opinions are all
 welcome, and small first contributions are genuinely useful.
 
@@ -9,8 +9,8 @@ welcome, and small first contributions are genuinely useful.
 Requires **Node 20+**.
 
 ```bash
-git clone https://github.com/dylanpersonguy/OpenCharts.git
-cd OpenCharts
+git clone https://github.com/dylanpersonguy/OpenBroker.git
+cd OpenBroker
 npm install
 npm run dev
 ```
@@ -44,7 +44,7 @@ A few notes on what they enforce:
   `scripts/check-bundle-size.mjs` in the same commit and say why.
 
 - **`build:lib`** builds what ships to npm and fails if any stylesheet rule
-  escapes the `.opencharts` scope — one global rule is enough to restyle, or
+  escapes the `.openbroker` scope — one global rule is enough to restyle, or
   freeze the scrolling of, every page that embeds the terminal.
 
 ## How the project is laid out
@@ -56,15 +56,15 @@ The README has a full tour, but the short version:
 | `src/pages/trading/` | The terminal: chart, toolbars, order ticket, DOM, watchlist, replay |
 | `src/lib/chart-plugins/` | lightweight-charts primitives and the custom drawing engine |
 | `src/lib/indicators.ts` | Indicator maths — pure functions over candle arrays |
-| `src/adapter/` | The public `OpenChartsAdapter` contract, provider, demo adapter and conformance suite |
+| `src/adapter/` | The public `OpenBrokerAdapter` contract, provider, demo adapter and conformance suite |
 | `src/terminal/` | `<Terminal />`, `<TerminalProvider>` and the composable panels |
 | `src/services/` | The internal `api` / `wsClient` facade and the in-browser demo backend |
 | `src/__tests__/` | Vitest suites |
 
 **The one architectural rule**: UI code talks to `api` and `wsClient`, never to
 an adapter or the demo layer directly, and backends plug in only through the
-`OpenChartsAdapter` contract in `src/adapter/types.ts`. That boundary is what
-lets people point OpenCharts at their own backend without forking, so please
+`OpenBrokerAdapter` contract in `src/adapter/types.ts`. That boundary is what
+lets people point OpenBroker at their own backend without forking, so please
 keep changes on the right side of it.
 
 ## Good first contributions
@@ -73,13 +73,13 @@ keep changes on the right side of it.
   `INDICATOR_REGISTRY`, render it in `useIndicators.ts`. Cover the degenerate
   cases — flat series, zero-range windows, invalid periods — the existing tests
   show the pattern.
-- **Drawing tools.** Five files, listed in the README's "Building on OpenCharts"
+- **Drawing tools.** Five files, listed in the README's "Building on OpenBroker"
   section.
 - **Themes.** The chart palette is in `pages/trading/constants.ts`, design
   tokens in `tailwind.config.js`.
 - **Data adapters** for other exchanges or brokers, written against
-  `OpenChartsAdapter`. Start from `examples/binance-adapter/` and verify with
-  `runAdapterConformance` from `@dylanpersonguy/opencharts/conformance`.
+  `OpenBrokerAdapter`. Start from `examples/binance-adapter/` and verify with
+  `runAdapterConformance` from `@dylanpersonguy/openbroker/conformance`.
 - **Bug reports.** Genuinely useful. Include what you expected and what happened.
 
 ## Pull requests
@@ -101,7 +101,7 @@ what you did, what you expected, what happened, and anything in the console.
 
 ## A note on scope
 
-OpenCharts ships no market-data feed, no news integration and no trading
+OpenBroker ships no market-data feed, no news integration and no trading
 backend. The bundled data is real historical OHLC; everything simulated is
 labelled as such in the UI and in the README's "What's real and what's
 simulated" table. Please keep it that way — nothing in this project should be

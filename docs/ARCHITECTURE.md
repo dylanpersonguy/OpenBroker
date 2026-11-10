@@ -1,7 +1,7 @@
 # Architecture
 
-OpenCharts is a terminal (charts, panels, order flow) that talks to a backend through one contract, the
-`OpenChartsAdapter` in `src/adapter/types.ts`. The Hyperliquid broker is an adapter plus a small amount of UI
+OpenBroker is a terminal (charts, panels, order flow) that talks to a backend through one contract, the
+`OpenBrokerAdapter` in `src/adapter/types.ts`. The Hyperliquid broker is an adapter plus a small amount of UI
 that appears only when that adapter is installed. Nothing in the terminal imports Hyperliquid code
 statically, so the default demo bundle does not carry it.
 
@@ -9,7 +9,7 @@ statically, so the default demo bundle does not carry it.
 
 | Area | Files | Responsibility |
 |---|---|---|
-| Contract | `src/adapter/{types,registry,provider}.ts(x)` | The adapter interface, the module-level registry, and `<OpenChartsProvider>` (query cache, stream bridge, boot) |
+| Contract | `src/adapter/{types,registry,provider}.ts(x)` | The adapter interface, the module-level registry, and `<OpenBrokerProvider>` (query cache, stream bridge, boot) |
 | Terminal | `src/terminal/*`, `src/pages/trading/*` | Shared state (`TerminalProvider`), the default layout, and the panels |
 | App root | `src/Root.tsx`, `src/adapterChoice.ts` | Picks demo, Binance or Hyperliquid from env; loads the last two lazily |
 | Config and session | `hyperliquid/{config,session,types}.ts` | Network, builder code and fee clamp; the zustand session (address, agent key, status); shared types |
@@ -43,7 +43,7 @@ flowchart LR
   subgraph Browser
     Root["Root.tsx<br/>(adapterChoice)"] --> App["HyperliquidApp (lazy)"]
     App --> Gate["ComplianceGate<br/>geo + terms"]
-    Gate --> Prov["OpenChartsProvider"]
+    Gate --> Prov["OpenBrokerProvider"]
     Prov --> Shell["HyperliquidShell<br/>top bar, dialogs, fee banner"]
     Shell --> Term["Terminal<br/>chart, watchlist, ticket, tables"]
 

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { createDemoAdapter } from "./adapter/demo.ts";
-import { OpenChartsProvider } from "./adapter/provider.tsx";
-import type { OpenChartsAdapter } from "./adapter/types.ts";
+import { OpenBrokerProvider } from "./adapter/provider.tsx";
+import type { OpenBrokerAdapter } from "./adapter/types.ts";
 import { chooseAdapter } from "./adapterChoice.ts";
 import { Terminal } from "./terminal/Terminal.tsx";
 
@@ -10,7 +10,7 @@ import { Terminal } from "./terminal/Terminal.tsx";
  *
  * Deliberately what an integrator would write: install an adapter, render the
  * terminal. Everything else — query cache, market-data stream, notifications,
- * error boundary — comes from `<OpenChartsProvider>`.
+ * error boundary — comes from `<OpenBrokerProvider>`.
  *
  * Which backend runs is chosen at build time:
  *  - `VITE_ADAPTER=hyperliquid`, or no `VITE_ADAPTER` with `VITE_HL_BUILDER_ADDRESS`
@@ -36,7 +36,7 @@ function Loading() {
 
 function BinanceOrDemo() {
   const wantsBinance = choice === "binance";
-  const [adapter, setAdapter] = useState<OpenChartsAdapter | null>(() =>
+  const [adapter, setAdapter] = useState<OpenBrokerAdapter | null>(() =>
     wantsBinance ? null : createDemoAdapter(),
   );
 
@@ -46,16 +46,16 @@ function BinanceOrDemo() {
       .then(({ createBinancePaperAdapter }) => createBinancePaperAdapter())
       .then(setAdapter)
       .catch((err: unknown) => {
-        console.error("[opencharts] failed to load the Binance adapter; using the demo", err);
+        console.error("[openbroker] failed to load the Binance adapter; using the demo", err);
         setAdapter(createDemoAdapter());
       });
   }, [wantsBinance]);
 
   if (!adapter) return null;
   return (
-    <OpenChartsProvider adapter={adapter}>
+    <OpenBrokerProvider adapter={adapter}>
       <Terminal />
-    </OpenChartsProvider>
+    </OpenBrokerProvider>
   );
 }
 

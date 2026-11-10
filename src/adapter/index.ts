@@ -1,10 +1,10 @@
 /**
- * Public entry point for embedding OpenCharts.
+ * Public entry point for embedding OpenBroker.
  *
- * Implement `OpenChartsAdapter`, hand it to `<OpenChartsProvider>`, and the
+ * Implement `OpenBrokerAdapter`, hand it to `<OpenBrokerProvider>`, and the
  * terminal runs against your backend — no fork, no patched files.
  */
-export { OpenChartsProvider } from "./provider.tsx";
+export { OpenBrokerProvider } from "./provider.tsx";
 export {
   getAdapter,
   hasAdapter,
@@ -19,7 +19,7 @@ export type {
   ConnectionState,
   MarketDataSource,
   MarketEvent,
-  OpenChartsAdapter,
+  OpenBrokerAdapter,
   Order,
   OrderModification,
   Page,

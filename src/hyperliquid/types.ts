@@ -2,7 +2,7 @@ import type { Address } from "./config.ts";
 
 /**
  * One tradable Hyperliquid perp market, normalised for the terminal.
- * `symbol` is the exact string used as OpenCharts `Symbol.name` everywhere
+ * `symbol` is the exact string used as OpenBroker `Symbol.name` everywhere
  * (candles, ticks, orders, positions): it is the Hyperliquid coin name,
  * "BTC" for the core dex, "xyz:EUR" for HIP-3 dexes. It is at most 20 chars.
  */

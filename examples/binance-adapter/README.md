@@ -1,6 +1,6 @@
 # Live market data from Binance
 
-A working `OpenChartsAdapter` in one file — real prices, real candles, no API
+A working `OpenBrokerAdapter` in one file — real prices, real candles, no API
 key, and no changes to the terminal itself.
 
 It exists to prove the adapter contract is implementable against a real

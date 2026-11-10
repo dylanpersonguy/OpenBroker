@@ -1,7 +1,7 @@
 {
-  "name": "@dylanpersonguy/opencharts",
+  "name": "@dylanpersonguy/openbroker",
   "version": "0.3.0",
-  "description": "Open-source trading terminal: advanced charting, drawing tools and a built-in paper-trading engine, with no backend required.",
+  "description": "OpenBroker: an open-source, non-custodial decentralized brokerage terminal for forex, stocks, commodities, indices and crypto, built on Hyperliquid.",
   "keywords": [
     "trading",
     "charting",
@@ -11,16 +11,23 @@
     "react",
     "paper-trading",
     "drawing-tools",
-    "technical-analysis"
+    "technical-analysis",
+    "decentralized-brokerage",
+    "hyperliquid",
+    "forex",
+    "defi",
+    "perpetuals",
+    "non-custodial",
+    "web3"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dylanpersonguy/OpenCharts.git"
+    "url": "https://github.com/dylanpersonguy/OpenBroker.git"
   },
-  "homepage": "https://github.com/dylanpersonguy/OpenCharts#readme",
+  "homepage": "https://github.com/dylanpersonguy/OpenBroker#readme",
   "bugs": {
-    "url": "https://github.com/dylanpersonguy/OpenCharts/issues"
+    "url": "https://github.com/dylanpersonguy/OpenBroker/issues"
   },
   "type": "module",
   "engines": {

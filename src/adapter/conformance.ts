@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { MarketEvent, OpenChartsAdapter, TradingEvent } from "./types.ts";
+import type { MarketEvent, OpenBrokerAdapter, TradingEvent } from "./types.ts";
 
 /**
- * A conformance suite for OpenCharts adapters.
+ * A conformance suite for OpenBroker adapters.
  *
  * Point it at your adapter and it checks the parts of the contract the
  * terminal actually relies on — the ones that fail quietly if you get them
@@ -10,7 +10,7 @@ import type { MarketEvent, OpenChartsAdapter, TradingEvent } from "./types.ts";
  * window the chart's scroll-back pagination sends.
  *
  * ```ts
- * import { runAdapterConformance } from "opencharts/adapter/conformance";
+ * import { runAdapterConformance } from "openbroker/adapter/conformance";
  *
  * runAdapterConformance("my-broker", () => createMyAdapter(), {
  *   symbol: "BTCUSD",
@@ -57,7 +57,7 @@ function waitForEvent<T>(
 
 export function runAdapterConformance(
   name: string,
-  createAdapter: () => OpenChartsAdapter | Promise<OpenChartsAdapter>,
+  createAdapter: () => OpenBrokerAdapter | Promise<OpenBrokerAdapter>,
   options: ConformanceOptions = {},
 ): void {
   const {
@@ -68,7 +68,7 @@ export function runAdapterConformance(
   } = options;
 
   describe(`adapter conformance: ${name}`, () => {
-    let adapter: OpenChartsAdapter;
+    let adapter: OpenBrokerAdapter;
     let symbol: string;
 
     const setup = async () => {

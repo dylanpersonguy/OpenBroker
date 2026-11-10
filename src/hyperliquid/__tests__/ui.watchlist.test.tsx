@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { __clearAdapter, setAdapter } from "../../adapter/registry.ts";
-import type { OpenChartsAdapter } from "../../adapter/types.ts";
+import type { OpenBrokerAdapter } from "../../adapter/types.ts";
 import { HlWatchlist } from "../ui/HlWatchlist.tsx";
 import {
   categoryOf,
@@ -107,7 +107,7 @@ beforeEach(() => {
     marketData: {
       registry: { load: () => Promise.resolve(), markets: () => [tsla], bySymbol: (s: string) => (s === tsla.symbol ? tsla : undefined) },
     },
-  } as unknown as OpenChartsAdapter);
+  } as unknown as OpenBrokerAdapter);
 });
 afterEach(() => __clearAdapter());
 

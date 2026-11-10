@@ -8,7 +8,7 @@ import {
   marketToSymbol,
   priceTickSize,
   roundPriceToTick,
-  toOpenChartsSymbols,
+  toOpenBrokerSymbols,
 } from "../symbols.ts";
 
 describe("formatHlPrice", () => {
@@ -222,7 +222,7 @@ describe("createMarketRegistry", () => {
   });
 });
 
-describe("OpenCharts mapping", () => {
+describe("OpenBroker mapping", () => {
   it("maps a market to a Symbol", async () => {
     const reg = createMarketRegistry(fakeInfo());
     await reg.load();
@@ -243,10 +243,10 @@ describe("OpenCharts mapping", () => {
     });
   });
 
-  it("toOpenChartsSymbols uses the mids map", async () => {
+  it("toOpenBrokerSymbols uses the mids map", async () => {
     const reg = createMarketRegistry(fakeInfo());
     await reg.load();
-    const syms = toOpenChartsSymbols(reg.markets(), { BTC: 76101 });
+    const syms = toOpenBrokerSymbols(reg.markets(), { BTC: 76101 });
     expect(syms).toHaveLength(reg.markets().length);
     expect(syms.find((s) => s.name === "BTC")!.tickSize).toBe(1);
     for (const s of syms) expect(s.tickSize).toBeGreaterThan(0);

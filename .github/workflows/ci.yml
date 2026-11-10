@@ -61,7 +61,7 @@ jobs:
 
       # The npm package is a separate build from the demo; build it too so a
       # packaging regression fails here, not in an integrator's install. The
-      # CSS step also fails if any selector escapes the .opencharts scope.
+      # CSS step also fails if any selector escapes the .openbroker scope.
       - name: Build library
         run: npm run build:lib
 

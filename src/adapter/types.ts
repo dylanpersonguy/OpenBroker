@@ -9,10 +9,10 @@ import type {
 } from "../services/schemas.ts";
 
 /**
- * The OpenCharts adapter contract.
+ * The OpenBroker adapter contract.
  *
  * This is the whole surface the terminal needs from a data and trading
- * backend. Implement it and pass it to `<OpenChartsProvider adapter={...}>` —
+ * backend. Implement it and pass it to `<OpenBrokerProvider adapter={...}>` —
  * there is no need to fork the project or edit any file inside it.
  *
  * Only `marketData` is required. Without `trading` the terminal runs as a
@@ -175,7 +175,7 @@ export interface StorageDriver {
   remove(key: string): void | Promise<void>;
 }
 
-export interface OpenChartsAdapter {
+export interface OpenBrokerAdapter {
   /** Shown in diagnostics; helps when several adapters are in play. */
   name?: string;
   marketData: MarketDataSource;

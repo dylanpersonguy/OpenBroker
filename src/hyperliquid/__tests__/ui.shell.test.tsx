@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { chooseAdapter } from "../../adapterChoice.ts";
 import { __clearAdapter, setAdapter } from "../../adapter/registry.ts";
-import type { OpenChartsAdapter } from "../../adapter/types.ts";
+import type { OpenBrokerAdapter } from "../../adapter/types.ts";
 import { PositionsTable } from "../../pages/trading/PositionsTable.tsx";
 import { MarketClosedBanner } from "../../pages/trading/MarketClosedBanner.tsx";
 import type { Symbol as OcSymbol } from "../../services/schemas.ts";
@@ -43,7 +43,7 @@ describe("chooseAdapter", () => {
 describe("mode detection", () => {
   it("is true only for the hyperliquid adapter", () => {
     expect(isHyperliquidMode()).toBe(false);
-    setAdapter({ name: "demo", marketData: {} } as unknown as OpenChartsAdapter);
+    setAdapter({ name: "demo", marketData: {} } as unknown as OpenBrokerAdapter);
     expect(isHyperliquidMode()).toBe(false);
     setAdapter(createHyperliquidAdapter());
     expect(isHyperliquidMode()).toBe(true);

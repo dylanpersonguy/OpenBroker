@@ -41,7 +41,7 @@ export function TopBar() {
       data-testid="hl-topbar"
     >
       <div className="flex items-center gap-2 text-sm font-semibold">
-        <span>OpenCharts</span>
+        <span>OpenBroker</span>
         <NetworkPill />
       </div>
       <div className="flex items-center gap-2">

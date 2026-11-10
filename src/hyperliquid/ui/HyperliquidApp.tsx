@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OpenChartsProvider } from "../../adapter/provider.tsx";
+import { OpenBrokerProvider } from "../../adapter/provider.tsx";
 import { Terminal } from "../../terminal/Terminal.tsx";
 import { createHyperliquidAdapter } from "../adapter.ts";
 import { ComplianceGate } from "../compliance/index.ts";
@@ -15,11 +15,11 @@ export default function HyperliquidApp() {
   const [adapter] = useState(() => createHyperliquidAdapter());
   return (
     <ComplianceGate>
-      <OpenChartsProvider adapter={adapter}>
+      <OpenBrokerProvider adapter={adapter}>
         <HyperliquidShell>
           <Terminal />
         </HyperliquidShell>
-      </OpenChartsProvider>
+      </OpenBrokerProvider>
     </ComplianceGate>
   );
 }

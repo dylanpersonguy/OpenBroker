@@ -1,7 +1,7 @@
 /*
  * Page shell for the hosted demo only.
  *
- * Everything in global.css is scoped under `.opencharts` at build time (see
+ * Everything in global.css is scoped under `.openbroker` at build time (see
  * postcss.config.js), so it cannot touch a host page. The demo is a full-screen
  * app, though, so its own page needs sizing — and that must NOT ship to
  * integrators, whose pages have to keep scrolling. This file is excluded from

@@ -1,915 +1,213 @@
 <div align="center">
 
-# 📈 OpenCharts
+# OpenBroker
 
-**An open-source trading terminal that runs entirely in your browser — no backend to run, no signup, no API keys.**
+### The decentralized brokerage: forex, stocks, commodities, crypto and indices in one non-custodial trading terminal
 
-Advanced charting · full drawing-tool suite · 8 indicators · session replay · watchlist · depth-of-market · order ticket · built-in paper-trading engine, seeded with **real** market history.
+**Trade 300+ perpetual markets from your own wallet. No account, no custody, pro-grade charting. Built on [Hyperliquid](https://hyperliquid.xyz).**
 
-[![CI](https://github.com/dylanpersonguy/OpenCharts/actions/workflows/ci.yml/badge.svg)](https://github.com/dylanpersonguy/OpenCharts/actions/workflows/ci.yml)
+[![CI](https://github.com/dylanpersonguy/OpenBroker/actions/workflows/ci.yml/badge.svg)](https://github.com/dylanpersonguy/OpenBroker/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%E2%89%A520-brightgreen.svg)](https://nodejs.org)
+[![Built on Hyperliquid](https://img.shields.io/badge/built%20on-Hyperliquid-1ddbc0.svg)](https://hyperliquid.xyz)
+[![Non-custodial](https://img.shields.io/badge/custody-non--custodial-brightgreen.svg)](#non-custodial-by-design)
+[![TypeScript](https://img.shields.io/badge/TypeScript-React-3178c6.svg)](#tech-stack)
 
-**[▶ Live demo](https://dylanpersonguy.github.io/OpenCharts/)** · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
-
-![OpenCharts trading terminal](docs/screenshot.png)
+![OpenBroker decentralized brokerage trading terminal showing a BTC candlestick chart with drawing tools and indicators](docs/img/openbroker-terminal.png)
 
 </div>
 
 ---
 
-## Table of contents
+## What is OpenBroker?
 
-- [What is OpenCharts?](#what-is-opencharts)
-- [Features](#features)
-- [Quick start](#quick-start)
-- [What's real and what's simulated](#whats-real-and-whats-simulated)
-- [How it works](#how-it-works)
-- [Built on Lightweight Charts](#built-on-lightweight-charts)
-- [Project structure](#project-structure)
-- [Building on OpenCharts](#building-on-opencharts)
-- [Refreshing the bundled market data](#refreshing-the-bundled-market-data)
-- [Integrating OpenCharts](#integrating-opencharts)
-- [Hyperliquid broker](#hyperliquid-broker)
-- [Adding instruments](#adding-instruments)
-- [Configuration](#configuration)
-- [Scripts](#scripts)
-- [Tech stack](#tech-stack)
-- [Known limitations](#known-limitations)
-- [Contributing](#contributing)
-- [Acknowledgements](#acknowledgements)
-- [License](#license)
+**OpenBroker is an open-source decentralized brokerage platform.** It puts every major asset class behind a
+single, professional trading terminal: **forex, stocks, commodities (gold, silver, oil), stock indices and
+crypto**. Everything settles on-chain on Hyperliquid, so your funds stay in your own wallet at all times.
 
----
+Traditional brokers make you open an account per asset class, hand over custody of your money and wait for
+markets to open. OpenBroker replaces that with one terminal and one wallet: connect, pick any market, trade.
 
-## What is OpenCharts?
-
-OpenCharts is a self-contained **trading terminal UI**. Open it and you land
-straight in the terminal: a candlestick chart with a TradingView-style drawing
-toolbar, indicators, a watchlist, a depth-of-market ladder and an order ticket —
-all wired to an **in-browser paper-trading engine** funded with $100,000.
-
-There is **no server to run**. The session is seeded with *genuine* historical
-OHLC pulled from Binance's public klines endpoint at build time, and a tick
-stream is replayed forward from the present, so the chart and prices move like a
-live feed while you place and manage paper trades.
-
-It's useful as:
-
-- A **standalone charting / paper-trading app** you can host on any static host.
-- A **reference terminal UI** you can point at your own market-data and trading
-  backend — implement one adapter interface, no fork required
-  (see [Integrating OpenCharts](#integrating-opencharts)).
-- A **learning sandbox** for charting, technical drawing and order management.
-
-The codebase was extracted from a closed-source prop-trading platform, so a few
-panels are gated off or stubbed rather than removed — those are called out
-explicitly below rather than advertised as features.
-
-**This is a community project.** The goal is a genuinely open trading terminal
-interface — beautiful charts, a deep drawing toolkit, and enough customizability
-that you can bend it into your own terminal instead of fighting it. It is
-deliberately small, dependency-light and backend-agnostic so that anyone can
-clone it, understand it in an afternoon and extend it. Contributions of every
-size are welcome, from a new indicator or drawing tool to an exchange adapter,
-a theme, a bug report or a docs fix — see
-[Building on OpenCharts](#building-on-opencharts) and
-[Contributing](#contributing).
+- **One platform, every market.** EUR/USD, gold, crude oil, Nvidia, Tesla, the Nikkei, Bitcoin and hundreds more, in a single watchlist.
+- **Non-custodial.** OpenBroker never holds your funds and cannot withdraw them. You sign with your own wallet.
+- **Trade-grade charting.** A full drawing-tool suite, indicators, multiple timeframes and a live order book.
+- **Open source.** MIT licensed. Audit it, fork it, self-host it.
 
 ## Features
 
-### 📊 Charting
-- Candlestick chart powered by [`lightweight-charts`](https://github.com/tradingview/lightweight-charts) v4 with custom plugins.
-- Timeframes **1m → 1w** (1m, 5m, 15m, 30m, 1h, 4h, 1d, 1w), up to 1000 bars per
-  timeframe (fewer where the exchange has less history, e.g. 461 weekly bars).
-- Volume histogram, OHLC legend, live bid/ask price lines, crosshair and bar countdown.
-- Toggleable chart plugins: crosshair highlight, session highlighting, session
-  breaks, bands indicator, OHLCV tooltip and delta (multi-touch) tooltip.
-- Chart settings dialog, right-click context menu, per-symbol preferences and
-  saveable **chart templates** — all persisted to `localStorage`.
+### Every asset class in one place
 
-### 📐 Indicators
-SMA, EMA, RSI, MACD, Bollinger Bands, ATR, Stochastic and VWAP, added from the
-toolbar and removable individually or in bulk from the chart context menu.
+| Asset class | Examples | Instrument type |
+| --- | --- | --- |
+| **Crypto** | BTC, ETH, SOL, HYPE and 180+ more | Perpetual futures |
+| **Forex** | EUR/USD, USD/JPY, GBP/USD | Perpetual futures |
+| **Stocks** | Tesla, Nvidia, Apple, Microsoft and 100+ more | Equity perpetuals |
+| **Commodities** | Gold, Silver, Crude Oil, Brent, Copper, Platinum | Commodity perpetuals |
+| **Indices** | S&P 500, Nikkei 225, KOSPI 200 | Index perpetuals |
 
-### ✏️ Drawing tools
-- Draggable, hideable tool rail grouped into **Lines** (trend line, ray, extended
-  line, horizontal, vertical, parallel channel), **Fibonacci** (retracement,
-  extension), **Shapes** (rectangle, ellipse, triangle, arrow), **Trade**
-  (long position, short position, measure) and **Text**.
-- Position tools show risk, R:R and position size against live account equity;
-  trend lines show Δprice / Δ% / bar count while being drawn or selected.
-- Per-object styling (color, width, line style, labels) with a TradingView-style
-  text editor, magnet mode (off / weak / strong snapping to OHLC), Shift for 45°
-  angle snapping and multi-select, and keyboard shortcuts (`Alt+H`, `Alt+T`,
-  `Alt+F`, `Alt+R`, `Alt+M`).
-- An **object tree** panel to select, toggle and delete drawings.
-- **Line-cross alerts**: enable an alert on a horizontal line or trend line and
-  the chart fires an in-session toast + sound when the mid price crosses it
-  (in-session only — nothing is persisted or delivered offline).
-- Drawings persist per symbol in `localStorage` and survive reloads.
+Markets are discovered live from Hyperliquid, including markets deployed through its HIP-3 builder-deployed
+perpetuals, so new listings show up in OpenBroker automatically. Instruments are grouped and labelled
+(for example "EUR/USD" or "Gold") and searchable in the symbol picker.
 
-### 📋 Watchlist · DOM · order ticket
-- **Watchlist** with live prices across all bundled instruments.
-- **Depth-of-market ladder** around the live mid price.
-- **Order ticket**: market / limit / stop tickets with volume presets,
-  take-profit and stop-loss, one-click trade mode and an order confirmation
-  dialog. See [what's simulated](#whats-real-and-whats-simulated) for how
-  limit/stop tickets currently behave.
-- **Positions / Orders / Trade History** tabs with modify, close, partial close
-  and close-all, plus **Calendar** (TradingView embed) and **News** tabs.
-- Drag stop-loss / take-profit levels directly on the chart.
-- Trade execution sound (mutable), connection indicator, market-closed banner
-  and a dedicated mobile trading panel for narrow screens.
+### Professional trading terminal
 
-### ⏯️ Session replay
-- Replay the charted symbol's 1-minute history with play / pause / stop, speeds
-  from 0.5× to 10×, and a scrubber to seek anywhere in the session.
-- Bars are revealed progressively as the cursor advances, and trades you closed
-  during the replayed window appear as markers.
-- Entirely client-driven — the clock runs in the browser off the bundled data.
+- **Advanced candlestick charts** from 1 minute to 1 week, with live streaming prices.
+- **Full drawing-tool suite**: trend lines, channels, Fibonacci, shapes, text and more.
+- **Technical indicators** including moving averages, RSI, MACD, Bollinger Bands and volume.
+- **Depth of market** ladder with live bid/ask and spread.
+- **Watchlist** with categories, favourites and live prices.
+- **Order ticket** with market, limit and stop orders, take-profit and stop-loss, reduce-only and one-click trading.
+- **Leverage and margin controls**: cross and isolated margin, with each market's maximum leverage shown up front.
+- **Positions, orders, trade history and journal** panels.
+- **Responsive**: works on desktop and mobile.
 
-### 📓 Trade journal
-- Log entries per trade with notes, tags, an emotion and a rating, filterable by
-  symbol and scoped to the account. Entries persist in `localStorage`.
+### Non-custodial by design
 
-### 💵 Built-in paper trading
-- $100,000 starting balance, 100× leverage, no commission or swap.
-- **Market, limit and stop orders** with a real lifecycle: market fills at the
-  current price, limit and stop orders rest as `PENDING` and trigger when a tick
-  crosses them (limits get price improvement, stops take the slippage).
-- Orders are validated before they reach the book — size, price, stop placement
-  and free margin — and rejections explain themselves.
-- Positions are **marked to market on every tick** with running P&L.
-- Stop-loss / take-profit are evaluated automatically and close positions when hit.
-- Account equity, balance, used and free margin update in real time.
+- **Your keys, your funds.** Connect any EIP-1193 browser wallet (MetaMask, Rabby, Coinbase Wallet and others).
+- **Limited trading key.** Orders are signed by an approved *agent key* held only in your browser. It can place and cancel orders. It **cannot withdraw**. Revoke it any time.
+- **Deposit and withdraw in the app** with your own wallet signature.
+- **No sign-up, no email, no password.** Your wallet is your account.
+- **Private by default.** No analytics or third-party scripts in the trading build, and a strict Content Security Policy in production.
 
-### 🛰️ Real market data, no backend
-- Bundled OHLC is **real** historical data fetched at build time — no random walks.
-- A replay feed streams those closes forward from "now" so the terminal feels live.
-- Everything runs client-side — deploy it as a static site.
+### Built for developers
+
+- **Adapter architecture.** The terminal talks to three small interfaces (`MarketDataSource`, `TradingGateway`, `StorageDriver`), so any venue can be plugged in.
+- **Embeddable.** Use the whole terminal or mount individual panels (chart, order ticket, watchlist) in your own React app.
+- **Typed end to end** with TypeScript, 745 unit tests and a Playwright end-to-end suite that runs against a simulated exchange.
 
 ## Quick start
 
-### Use it in your app
-
-> **Not on npm yet.** The package is ready to publish but has not been
-> released. Until it is, build the tarball from a clone and install that:
->
-> ```bash
-> npm install && npm run build:lib && npm pack
-> # then, in your app:
-> npm install /path/to/OpenCharts/dylanpersonguy-opencharts-0.3.0.tgz
-> ```
->
-> Once it is published, this becomes:
-
 ```bash
-npm install @dylanpersonguy/opencharts
-```
-
-```tsx
-import { OpenChartsProvider, Terminal } from "@dylanpersonguy/opencharts";
-import { createDemoAdapter } from "@dylanpersonguy/opencharts/demo";
-import "@dylanpersonguy/opencharts/style.css";
-
-export function TradingScreen() {
-  return (
-    <div style={{ height: 640 }}>
-      <OpenChartsProvider adapter={createDemoAdapter()}>
-        <Terminal />
-      </OpenChartsProvider>
-    </div>
-  );
-}
-```
-
-That runs the full terminal against the bundled demo data — nothing else to
-configure. Swap `createDemoAdapter()` for your own adapter to point it at a real
-backend ([Integrating OpenCharts](#integrating-opencharts)). React 18.2+ is the
-only peer dependency; the stylesheet is precompiled, so your app does not need
-Tailwind.
-
-### Run this repository
-
-> Requires **Node 20+**.
-
-```bash
+git clone https://github.com/dylanpersonguy/OpenBroker.git
+cd OpenBroker
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
-Open the printed local URL (e.g. `http://localhost:5173`). The app boots straight
-into a session with a funded paper account — pick a symbol from the watchlist,
-set a size in the order ticket, and go long or short.
+Open `http://localhost:5173`. Browsing markets and charts needs no wallet.
 
-To build for production:
+To run against the Hyperliquid **testnet** (recommended for your first trades), set these in `.env.local`:
 
 ```bash
-npm run build      # outputs to dist/
-npm run preview    # serve the production build locally
+VITE_ADAPTER=hyperliquid
+VITE_HL_NETWORK=testnet
 ```
 
-## What's real and what's simulated
+Connect a wallet, choose **Enable trading**, fund the account from the Hyperliquid testnet faucet and place a
+small order.
 
-OpenCharts is a paper terminal, and being precise about this matters more than
-marketing copy:
+> **Real money warning.** On mainnet, OpenBroker places real orders with real funds. Leveraged derivatives
+> are risky and you can lose more than you expect. Test on testnet first. Nothing here is financial advice.
 
-| Piece | Status |
-| --- | --- |
-| OHLC history (6 crypto pairs × 8 timeframes) | **Real** Binance klines, bundled as JSON |
-| Tick feed | **Real** 1m closes, replayed every 600 ms starting at the latest close and reversing at each end of the series (no price jumps) |
-| Bar timestamps | **Shifted** so the last real bar lands on the current period |
-| Bid/ask spread | **Derived** — synthesized around the replayed close |
-| DOM ladder sizes | **Synthetic** — derived deterministically from each price level, so a level's size is stable while price hovers |
-| Order fills, positions, P&L, margin | Real arithmetic against the in-browser engine |
-| Limit / stop orders | **Rest as PENDING** until a tick crosses their trigger, then fill — limits at their price or better, stops at the market that triggered them |
-| Order modify / cancel | Real, and restricted to pending orders |
-| Order validation | Real — quantity, price, side, stop placement, protective-level side and free margin are all checked, with the reason surfaced in a toast |
-| News tab | **Placeholder headlines**, labelled "Sample data" in the UI and attributed to no real outlet |
-| Economic calendar tab & technical-analysis gauge | TradingView embed widgets — real data, loaded from TradingView's CDN. The calendar has a toggle to a **sample** table, labelled as such |
-| Trade journal | **Working** — entries persist to `localStorage`, scoped per account |
-| Session replay | **Working** — plays the bundled 1m history for the charted symbol with play/pause/speed/seek |
-| Trade calculator | Present in the code but never mounted |
-| Account state (balance, positions, orders) | In-memory — **resets on reload** |
-| Drawings, chart prefs, templates, sound mute | Persisted in `localStorage` |
+### Production build
+
+```bash
+npm run build
+npm run check:size
+```
+
+The output in `dist/` is a static site you can host anywhere (Vercel, Cloudflare Pages, Netlify, GitHub Pages,
+S3). There is no backend to run.
 
 ## How it works
 
-The UI is **backend-agnostic**. It talks to an internal `api` / `wsClient` pair,
-and those resolve against whichever `OpenChartsAdapter` is installed. The
-bundled demo backend is simply the adapter that ships by default:
-
 ```
-                ┌─────────────────────────────────────────────────────────┐
-                │                    Terminal UI                          │
-                │     Chart · OrderTicket · DOM · Watchlist · …           │
-                └─────────────┬─────────────────────────────┬─────────────┘
-                              │ api.*                       │ wsClient.subscribe()
-                ┌─────────────▼─────────────┐ ┌─────────────▼─────────────┐
-                │   services/api.ts         │ │   services/ws.ts          │
-                │   (internal facade)       │ │   (adapter events →       │
-                │                           │ │    terminal channels)     │
-                └─────────────┬─────────────┘ └─────────────┬─────────────┘
-                              │                             │
-                ┌─────────────▼─────────────────────────────▼─────────────┐
-                │   OpenChartsAdapter  (adapter/types.ts)                 │
-                │   marketData · trading? · storage?                      │
-                │   installed by <OpenChartsProvider adapter={…}>         │
-                └─────────────┬───────────────────────────────────────────┘
-                              │ default: createDemoAdapter()
-                ┌─────────────▼───────────────────────────────────────────┐
-                │   adapter/demo.ts  →  services/demo/                    │
-                │   engine.ts    paper trading (positions, P&L, SL/TP)    │
-                │   feed.ts      replays real ticks as a live stream      │
-                │   candles.ts   serves bundled OHLC (shifted to now)     │
-                │   bus.ts       in-process pub/sub                       │
-                │   instruments.ts / data/   real OHLC + symbol specs     │
-                └─────────────────────────────────────────────────────────┘
+┌──────────────────────────┐        ┌─────────────────────────────────────┐
+│  OpenBroker terminal     │        │  Hyperliquid                        │
+│  charts · order ticket   │        │  order book · matching · settlement │
+│  watchlist · positions   │◄──────►│  crypto · forex · stocks ·          │
+│                          │  REST  │  commodities · indices              │
+│  Adapter layer           │  + WS  │                                     │
+│  market data · trading   │        └─────────────────────────────────────┘
+│  storage                 │
+└────────────┬─────────────┘
+             │ signs with
+             ▼
+   Your wallet (funds stay here)  +  limited agent key in your browser
 ```
 
-- **`services/api.ts`** — the internal facade every component reads and writes
-  through. Each method resolves against the installed adapter, mapping the
-  small public `OpenChartsAdapter` contract onto the calls the UI makes.
-- **`services/ws.ts`** — subscribes to the adapter's market-data and trading
-  streams and republishes them on the four channels the terminal consumes
-  (`market-data`, `positions`, `orders`, `account`). It also owns the
-  connection lifecycle.
-- **`adapter/demo.ts`** — the bundled backend expressed through the public
-  contract, and the reference implementation for writing your own.
-- **`services/demo/engine.ts`** — the paper-trading engine and single source of
-  truth for the demo account, positions and orders. It marks positions to
-  market on every tick.
-- **`services/demo/feed.ts`** — replays the bundled 1-minute closes for every
-  symbol as a forward-moving tick stream, every 600 ms, and drives
-  `engine.mark()`.
-- **`services/demo/candles.ts`** — serves the bundled history, time-shifted so
-  the most recent bar aligns to "now" (OHLC values stay real; only the timeline
-  is normalized).
+1. **Connect** your wallet. OpenBroker reads your balances and positions directly from Hyperliquid.
+2. **Enable trading** once. You approve a limited agent key that can trade but never withdraw.
+3. **Trade** any market from one terminal. Orders go straight to Hyperliquid's on-chain order book.
+4. **Withdraw** whenever you like, straight back to your wallet.
 
-Because the UI only ever sees `api` and `wsClient`, swapping the demo for a real
-backend is a matter of installing a different adapter — **no UI component
-changes**.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the module map and [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md)
+for the security model.
 
-## Built on Lightweight Charts
+## Frequently asked questions
 
-OpenCharts is **built on top of TradingView's
-[Lightweight Charts™](https://github.com/tradingview/lightweight-charts)**
-(`lightweight-charts` `^4.2.0`, resolved to 4.2.3 in the lockfile, which in turn
-pulls in `fancy-canvas`, MIT). The chart canvas, series, panes, price scales,
-crosshair and time axis are all
-Lightweight Charts. OpenCharts is the terminal *around* it: the drawing engine
-(`src/lib/chart-plugins/drawing-tools/`), the indicator layer, the series
-primitives, and the panels, order flow and paper engine that surround the chart.
+### What is a decentralized brokerage?
+A decentralized brokerage lets you trade financial markets without handing custody of your money to a company.
+Orders are matched and settled on a blockchain and your funds stay in a wallet you control. OpenBroker is the
+front end that makes this feel like a traditional broker terminal.
 
-Several plugins under `src/lib/chart-plugins/` (`plugin-base.ts`, `tooltip/`,
-`delta-tooltip/`, `session-highlighting/`, `session-breaks/`,
-`bands-indicator/`, `highlight-bar-crosshair/`, `helpers/`) are adapted from the
-`plugin-examples` shipped in the Lightweight Charts repository, and carry that
-project's license.
+### Can I really trade forex, stocks and commodities on-chain?
+Yes. Hyperliquid supports builder-deployed perpetual markets (HIP-3) that track stocks, currencies,
+commodities and indices, alongside its crypto perpetuals. OpenBroker lists them all together. Which non-crypto
+markets exist, and their leverage limits, are set by Hyperliquid and the market deployers, and some markets
+only allow isolated margin.
 
-### Licensing — read this before you fork or deploy
+### Does OpenBroker hold my funds?
+No. OpenBroker is non-custodial. Your funds are held in your own Hyperliquid account under your wallet, and
+the trading key OpenBroker uses cannot withdraw.
 
-- **Lightweight Charts is open source under the
-  [Apache License 2.0](https://github.com/tradingview/lightweight-charts/blob/master/LICENSE)** —
-  free for commercial use, but Apache 2.0 comes with conditions.
-- **Attribution is required.** TradingView's terms state that you must add the
-  attribution notice from their `NOTICE` file and a link to
-  <https://www.tradingview.com/> on the page of your site or app that users see.
-  The notice reads:
+### Do I need to create an account or pass KYC?
+There is no account to create: your wallet is your identity. Using the service may still be restricted in some
+jurisdictions, and a terms-and-eligibility screen is shown before trading.
 
-  ```
-  TradingView Lightweight Charts™
-  Copyright (с) 2025 TradingView, Inc. https://www.tradingview.com/
-  ```
+### Which wallets work?
+Any browser wallet that supports EIP-1193 and EIP-6963, including MetaMask, Rabby and Coinbase Wallet.
 
-- **OpenCharts satisfies this via the chart's built-in attribution logo.** The
-  `attributionLogo` layout option defaults to `true` and this project never
-  overrides it, so the TradingView link renders on the chart pane. **Do not set
-  `attributionLogo: false` unless you place the notice and link somewhere else
-  users can see.** The option is set (or, here, left alone) where the chart is
-  created in [`src/pages/trading/ChartPanel.tsx`](src/pages/trading/ChartPanel.tsx).
-- **Keep the notice when you redistribute.** Apache 2.0 requires that you pass
-  along the license and notice with any copy or derivative — that includes the
-  adapted plugin code in `src/lib/chart-plugins/`.
-- **OpenCharts' own code is MIT** (see [LICENSE](LICENSE)). MIT and Apache 2.0
-  are compatible, so a build that combines them is fine — you just have to honor
-  Apache 2.0's attribution and notice terms for the chart portion.
+### Does it support spot trading?
+Today OpenBroker trades perpetual futures. Spot market support is on the roadmap.
 
-None of this is legal advice; if you are shipping commercially, read the license
-yourself.
+### Is OpenBroker open source?
+Yes, under the MIT license.
+
+## Tech stack
+
+React, TypeScript, Vite, Tailwind CSS, zustand, TanStack Query, [Lightweight Charts](https://github.com/tradingview/lightweight-charts),
+viem and the [`@nktkas/hyperliquid`](https://github.com/nktkas/hyperliquid) SDK. Tested with Vitest and Playwright.
 
 ## Project structure
 
 ```
-src/
-├─ index.ts                 # the package's main entry (provider, terminal, panels, types)
-├─ demo.ts                  # the "/demo" entry: createDemoAdapter()
-├─ notifications.ts         # onNotification(), the public notification stream
-├─ main.tsx                 # hosted-demo entry: mounts Root, chunk-reload guard
-├─ Root.tsx                 # hosted-demo root: installs an adapter, renders <Terminal />
-├─ vendor/                  # types inlined from the original platform's shared package
-├─ pages/
-│  ├─ TradingPage.tsx       # the default layout, composed from the panels
-│  └─ trading/              # chart, toolbars, order panel, DOM, watchlist,
-│                           #   drawing rail, object tree, replay HUD/scrubber,
-│                           #   news overlay, indicators, challenge levels
-├─ lib/
-│  ├─ chart-plugins/        # lightweight-charts plugins used by the chart
-│  │  ├─ drawing-tools/      #   manager, renderers, hit-testing, geometry, alerts
-│  │  ├─ delta-tooltip/ tooltip/ highlight-bar-crosshair/
-│  │  └─ session-breaks/ session-highlighting/ bands-indicator/
-│  ├─ indicators.ts         # SMA/EMA/RSI/MACD/BOLL/ATR/STOCH/VWAP
-│  ├─ livePnl.ts            # live P&L / price math shared by the tables
-│  └─ utils.ts
-├─ components/              # dialogs, mobile panel, TradingView embeds, ui primitives
-├─ hooks/                   # drawings, chart prefs, trader prefs, trade sound…
-├─ terminal/               # composable terminal pieces
-│  ├─ context.tsx          #   <TerminalProvider>: the state the panels share
-│  ├─ panels.tsx           #   <Chart>, <OrderTicket>, <Positions>, …
-│  ├─ use-terminal.ts      #   useTerminal(), for panels you write yourself
-│  └─ Terminal.tsx         #   the full terminal in its default layout
-├─ adapter/                # the public integration surface
-│  ├─ types.ts             #   the OpenChartsAdapter contract
-│  ├─ provider.tsx         #   <OpenChartsProvider adapter={...}>
-│  ├─ registry.ts          #   the installed adapter, read by api / wsClient
-│  ├─ demo.ts              #   the bundled backend, as a reference adapter
-│  └─ conformance.ts       #   a test suite adapter authors can run
-├─ services/
-│  ├─ api.ts                # internal facade, resolves against the adapter
-│  ├─ ws.ts                 # adapter events → the terminal's channels
-│  ├─ replay.ts             # session-replay buffer and transport state
-│  ├─ toast.ts              # notification stream behind onNotification()
-│  ├─ api/                  # legacy HTTP clients from the original platform;
-│  │                        #   chart-templates.ts is localStorage-backed and live
-│  ├─ queries.ts            # TanStack Query hooks
-│  ├─ store.tsx             # zustand stores (auth + trading state)
-│  ├─ schemas.ts            # zod schemas / shared types
-│  └─ demo/                 # engine, feed, candles, bus, instruments, bundled data
-├─ __tests__/               # Vitest unit tests
-└─ styles/
-scripts/
-└─ fetch-demo-data.mjs      # refresh the bundled real OHLC
+src/hyperliquid/      Hyperliquid adapter: market data, trading, wallet, onboarding, UI, compliance
+src/terminal/         Embeddable terminal panels
+src/adapter/          Adapter contracts and provider
+src/pages/trading/    Chart, order panel, watchlist and bottom panels
+e2e/                  Playwright end-to-end tests with a simulated exchange
+docs/                 Architecture, security model, deployment and test checklists
 ```
 
-## Building on OpenCharts
-
-Everything below is a real extension point in the code, not a roadmap. `npm run
-typecheck` and `npm run test` are the two gates; TypeScript runs in `strict` mode
-with `noUncheckedIndexedAccess` and `noUnusedLocals`, and `@/` resolves to
-`src/`.
-
-### Add an indicator
-
-1. Write the pure calculation in [`src/lib/indicators.ts`](src/lib/indicators.ts)
-   (they take candles and return `{ time, value }[]` — copy `sma` or `rsi`).
-2. Add the type to the `IndicatorType` union and an entry to
-   `INDICATOR_REGISTRY` (`label`, `pane: "overlay" | "below"`, `defaultParams`,
-   `color`). The toolbar menu renders straight from the registry.
-3. Render it in [`src/pages/trading/useIndicators.ts`](src/pages/trading/useIndicators.ts),
-   which creates and disposes the Lightweight Charts series per active indicator.
-
-### Add a drawing tool
-
-The drawing engine is custom and lives in
-[`src/lib/chart-plugins/drawing-tools/`](src/lib/chart-plugins/drawing-tools/).
-A new tool touches five places:
-
-| File | What you add |
-| --- | --- |
-| `pages/trading/constants.ts` | the tool name in the `DrawingTool` union and any new fields on `DrawingLine` |
-| `drawing-tools/manager.ts` | a branch in `buildNew()` that turns anchor points into a `DrawingLine`, plus the single-click list in the pointer handler if it is a one-click tool |
-| `drawing-tools/renderers.ts` | a `case` in the render switch that paints it |
-| `drawing-tools/hit-test.ts` | a `case` so it can be selected and dragged |
-| `pages/trading/DrawingToolRail.tsx` | the rail button, icon and group |
-
-`geometry.ts` holds the shared math, `types.ts` the resolved (pixel-space)
-shapes. Drawings are plain JSON, so anything you add persists automatically.
-
-### Add a chart plugin
-
-Extend `PluginBase` from
-[`src/lib/chart-plugins/plugin-base.ts`](src/lib/chart-plugins/plugin-base.ts)
-(the Lightweight Charts `ISeriesPrimitive` contract: pane views + renderers),
-attach it where the other primitives are attached in `ChartPanel.tsx`, then add
-it to the plugin list in `ChartToolbar.tsx` so it gets a toggle. The existing
-six plugins are the reference implementations.
-
-### Indicators are pure and covered
-
-`lib/indicators.ts` holds plain functions over candle arrays, with
-[49 tests](src/__tests__/indicators.test.ts) pinning the maths (including the
-degenerate cases: flat series, zero-range windows, zero-volume bars and invalid
-periods). Add an indicator there and the guards apply automatically.
-
-### Quality gates
-
-All seven are expected to pass before a PR, and all seven pass on `main`:
-
-```bash
-npm run typecheck      # tsc --noEmit, strict, zero errors
-npm run lint           # ESLint 9 flat config, zero errors *and* zero warnings
-npm run test           # Vitest — 200 tests
-npm run build          # production bundle
-npm run check:size     # first-load payload budget
-npm run build:lib      # the npm package; fails if any CSS escapes the scope
-npm run check:package  # the built package matches its exports
-```
-
-GitHub Actions runs all seven on every pull request (`.github/workflows/ci.yml`),
-with lint under `--max-warnings=0`. The size gate exists because the first-load
-payload was 4.94 MB before the candle data was made lazy — see
-[`scripts/check-bundle-size.mjs`](scripts/check-bundle-size.mjs).
-
-The paper engine is the part worth breaking carefully — its order lifecycle,
-margin maths and rounding are covered in
-[`src/__tests__/engine.test.ts`](src/__tests__/engine.test.ts).
-
-### Where state lives
-
-- **Zustand** (`services/store.tsx`) — auth and trading state (symbols, accounts,
-  selected symbol, live ticks).
-- **TanStack Query** (`services/queries.ts`) — everything fetched through `api`,
-  keyed by `queryKeys`.
-- **The channel bus** (`services/demo/bus.ts`) — `services/ws.ts` republishes
-  adapter events on the `market-data`, `positions`, `orders` and `account`
-  channels; `components/MarketDataBridge.tsx`, mounted by the provider, is the
-  single place they land in React.
-- **`localStorage`** — drawings (`oc_drawings_<SYMBOL>`), chart templates
-  (`oc_chart_templates`), chart and trader preferences (`trader_prefs`, scoped
-  per user id) and the sound mute flag (`tradeSoundMuted`). Chart preference
-  changes broadcast a `chart-preferences-updated` window event rather than
-  going through a store.
-
-### Gotchas worth knowing
-
-- **`api` is typed exactly.** [`services/api.ts`](src/services/api.ts) is a
-  plain object with real signatures, so calling a method it does not implement
-  is a compile error. New backend capabilities belong in the adapter contract
-  (`adapter/types.ts`) first, then a facade method that maps onto it.
-- **Candle data loads lazily.** `services/demo/candles.ts` imports each
-  `<SYMBOL>_<tf>.json` on demand, so `getHistory` is async and the feed primes
-  the 1m series before it starts ticking.
-- **Never touch `localStorage` directly** — use
-  [`lib/safe-storage.ts`](src/lib/safe-storage.ts). Raw access throws in private
-  mode, when site data is blocked, and on quota exhaustion.
-- **`REPLAY_ENABLED`** in `pages/trading/constants.ts` still gates the replay
-  HUD and scrubber, should you want them off.
-- **Dates are local, not UTC.** Use `toLocalDateString()` from `lib/utils.ts`;
-  `toISOString().slice(0, 10)` is a different day for most of the world and put
-  the replay picker on a day with no data.
-- **React runs in `StrictMode`**, so chart effects mount twice in development —
-  every series, primitive and subscription needs a working cleanup path.
-- **The demo engine is in-memory.** Anything you want to survive a reload has to
-  be written to `localStorage` (or a backend you wire up yourself).
-
-## Refreshing the bundled market data
-
-The demo OHLC lives in `src/services/demo/data/` as JSON, fetched from the public
-**Binance klines** endpoint (no API key required):
-
-```bash
-node scripts/fetch-demo-data.mjs
-```
-
-This re-pulls up to 1000 bars per symbol per timeframe and rewrites the bundled files
-plus `data/manifest.json`. The candles are genuine market history — OpenCharts
-never ships synthetic OHLC.
-
-## Integrating OpenCharts
-
-**You do not fork OpenCharts to use your own data.** Implement one interface,
-hand it to the provider, and the whole terminal — chart, order ticket, positions,
-replay — runs against your backend.
-
-```tsx
-import { OpenChartsProvider, Terminal, type OpenChartsAdapter } from "@dylanpersonguy/opencharts";
-
-const adapter: OpenChartsAdapter = {
-  name: "my-broker",
-  marketData: {
-    getSymbols: () => myApi.instruments(),
-    getCandles: ({ symbol, timeframe, limit, fromMs, toMs }) =>
-      myApi.candles(symbol, timeframe, { limit, fromMs, toMs }),
-    subscribe: (handler) =>
-      myFeed.on("quote", (q) =>
-        handler({ type: "tick", symbol: q.symbol, bid: q.bid, ask: q.ask }),
-      ),
-  },
-};
-
-<OpenChartsProvider adapter={adapter}>
-  <Terminal />
-</OpenChartsProvider>;
-```
-
-That is the minimum: **`marketData` is the only required part.** Add `trading`
-to enable the order ticket and positions, and `storage` to keep a trader's
-drawings, templates and journal with their account instead of their browser.
-
-### The contract
-
-Defined in [`src/adapter/types.ts`](src/adapter/types.ts):
-
-| Group | Required | What it covers |
-| --- | --- | --- |
-| `marketData` | **yes** | `getSymbols`, `getCandles`, `subscribe`, and optionally `getQuote`, `connect`/`disconnect`, `onConnectionChange`, `setSymbolInterest` |
-| `trading` | no | accounts, positions, orders, closed trades, place/modify/cancel, and a `subscribe` for fills and account updates |
-| `storage` | no | a three-method key/value driver for drawings, chart templates and journal entries |
-
-Without `trading`, the terminal runs as a read-only chart and trading calls
-fail with a clear message rather than silently doing nothing.
-
-### Rules the terminal relies on
-
-- **Candle times are seconds, not milliseconds**, and bars come back oldest
-  first.
-- **`toMs` is exclusive.** The chart pages backwards with `fromMs`/`toMs`; an
-  adapter that ignores the window makes scroll-back loop, and one that treats
-  `toMs` as inclusive duplicates a bar per page.
-- **Every method returns a promise and rejects on failure** — never throw
-  synchronously. Rejection messages are shown to the trader as-is, so write
-  them for a human.
-- **`subscribe` returns an unsubscribe function**, and must stop delivering
-  once it is called.
-
-### Verify your adapter
-
-A conformance suite ships with the project and checks the things that fail
-quietly:
-
-```ts
-import { runAdapterConformance } from "@dylanpersonguy/opencharts/conformance";
-
-runAdapterConformance("my-broker", () => createMyAdapter(), { symbol: "BTCUSD" });
-```
-
-Trading checks submit and close orders, so they are opt-in
-(`allowTrading: true`) — **run them against a paper or sandbox gateway only.**
-
-### Compose your own layout
-
-`<Terminal />` is the full terminal in its default arrangement. To put the chart
-in your own dashboard, mount the panels individually instead — each reads what
-it needs from `<TerminalProvider>`, so they stay in sync without prop drilling:
-
-```tsx
-<OpenChartsProvider adapter={myAdapter}>
-  <TerminalProvider>
-    <main><Chart /></main>
-    <aside>
-      <Watchlist />
-      <OrderTicket />
-    </aside>
-    <footer><Positions /></footer>
-  </TerminalProvider>
-</OpenChartsProvider>
-```
-
-| Panel | What it is |
-| --- | --- |
-| `<Chart />` | Candles, indicators, drawing tools, position overlays, replay |
-| `<OrderTicket />` | Market / limit / stop entry with take-profit and stop-loss |
-| `<Positions />` | Open positions with close, partial close and modify |
-| `<Orders />` | Working orders with cancel and modify |
-| `<Watchlist />` | Instruments with live prices |
-| `<DepthLadder />` | Depth ladder around the mid price |
-
-`TerminalProvider` holds only shared *state* — the charted symbol, timeframe,
-account, drawings, positions — plus the confirm and modify dialogs, so every
-composition gets them. Layout is entirely yours. A full example is in
-[`examples/embedded-chart/`](examples/embedded-chart/).
-
-### What the provider handles for you
-
-`<OpenChartsProvider>` is the whole runtime. It installs the adapter, opens the
-market-data stream, loads instruments (and accounts, when the adapter trades),
-and supplies everything the panels depend on — a query cache, tooltips,
-notifications and an error boundary. If the adapter fails to load, it shows the
-error with a retry button instead of a blank screen.
-
-| Prop | Default | |
-| --- | --- | --- |
-| `adapter` | — | Your `OpenChartsAdapter` (required) |
-| `fallback` | "Loading OpenCharts…" | Shown while instruments and accounts load |
-| `queryClient` | its own | Pass yours to share a TanStack Query cache; by default the terminal's stays separate from the host's |
-| `showNotifications` | `true` | Render the built-in notifications |
-| `className` / `style` | — | Applied to the scoping element |
-
-### It will not touch your page
-
-Every rule in `style.css` — Tailwind's reset, utilities and the theme variables —
-is scoped under the `.opencharts` element the provider renders. Your page keeps
-its own fonts, spacing, form controls, tables and scrolling, and a
-[shadcn/ui](https://ui.shadcn.com) theme using the same variable names
-(`--background`, `--primary`, …) is left alone. The build fails if any selector
-escapes the scope.
-
-The terminal fills its container, so **give the parent a height**. For the light
-theme, add the `light` class to `<html>` or to the scoping element.
-
-### Route notifications into your own UI
-
-Order fills, rejections and their reasons, and validation warnings come
-through one stream:
-
-```tsx
-import { onNotification } from "@dylanpersonguy/opencharts";
-
-const stop = onNotification((n) => myToaster.show(n.title, n.message, n.type));
-```
-
-Pair it with `showNotifications={false}` to replace the built-in toasts.
-
-### A worked example
-
-[`examples/binance-adapter/`](examples/binance-adapter/) is a complete live
-adapter for Binance's public API in a single file: REST klines, book-ticker
-websocket streams, reconnect with backoff, composed with the bundled paper
-engine so you can trade live prices risk-free.
-
-```bash
-VITE_ADAPTER=binance npm run dev
-```
-
-It is the same terminal in the screenshot above, with nothing patched — only a
-different adapter installed.
-
-## Hyperliquid broker
-
-OpenCharts can run as a non-custodial front end for [Hyperliquid](https://hyperliquid.xyz) perpetuals,
-including HIP-3 markets (stocks, forex, commodities, indices). It is the same terminal and the same
-adapter contract: `createHyperliquidAdapter()` supplies market data, trading and account-scoped storage.
-
-> **Real money.** On mainnet this places real orders with real funds. Try it on testnet first and read
-> [docs/FEES.md](docs/FEES.md), [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) and
-> [docs/COMPLIANCE_CHECKLIST.md](docs/COMPLIANCE_CHECKLIST.md) before you launch it to anyone.
-
-### Architecture
-
-- **Market data** (`src/hyperliquid/marketData.ts`): REST for symbols and history, one WebSocket for
-  quotes and live candles. HIP-3 markets are discovered automatically.
-- **Trading** (`src/hyperliquid/trading.ts`): orders are signed in the browser by a limited *agent key* the
-  user approves once; it can trade but cannot withdraw. Every order carries the builder code, which is the
-  platform fee.
-- **Wallet and onboarding** (`wallet/`, `onboarding/`): connect, approve the agent key, approve the fee,
-  deposit and withdraw. Nothing opens until the user asks for it.
-- **UI** (`ui/`): the shell (top bar, dialogs), the order ticket, watchlist and depth panel that replace the
-  generic ones when this adapter is installed. They load lazily, so the demo bundle does not grow.
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the module map and data flow.
-
-### Environment variables
-
-Copy `.env.example` to `.env.local`. Everything starting with `VITE_` is public, so never put a secret in one.
-
-| Variable | Effect |
-| --- | --- |
-| `VITE_HL_BUILDER_ADDRESS` | Your builder (fee) address. **Setting it makes Hyperliquid the default adapter.** |
-| `VITE_HL_BUILDER_FEE` | Platform fee in tenths of a basis point, 0 to 100 (default 100 = 0.10% per side, Hyperliquid's perps maximum) |
-| `VITE_HL_NETWORK` | `mainnet` (default) or `testnet` |
-| `VITE_ADAPTER` | Force a backend: `hyperliquid`, `binance` or `demo`. Overrides the default above. |
-| `VITE_FEE_CONFIG_URL` | Optional JSON for a remote fee kill switch and banner message |
-| `VITE_GEO_CHECK_URL` | Optional geo-check endpoint used by the compliance gate |
-
-With neither `VITE_ADAPTER` nor `VITE_HL_BUILDER_ADDRESS` set, the app runs the bundled demo exactly as before.
-
-### Run it on testnet
-
-```bash
-cp .env.example .env.local
-# in .env.local:
-#   VITE_ADAPTER=hyperliquid
-#   VITE_HL_NETWORK=testnet
-#   VITE_HL_BUILDER_ADDRESS=0xYourBuilderAddress   # optional on testnet
-npm run dev
-```
-
-Connect a wallet, click **Enable trading** (two signatures: the trading key, then the fee), fund the account
-from the Hyperliquid testnet faucet and place a small order. The builder wallet needs at least 100 USDC of
-perps account value to receive fees; see [docs/OPERATIONS.md](docs/OPERATIONS.md).
-
-### Run it on mainnet
-
-```bash
-# .env.production (or your host's build environment)
-VITE_HL_NETWORK=mainnet
-VITE_HL_BUILDER_ADDRESS=0xYourBuilderAddress
-VITE_HL_BUILDER_FEE=100
-npm run build && npm run check:size
-```
-
-Before going live: work through [docs/COMPLIANCE_CHECKLIST.md](docs/COMPLIANCE_CHECKLIST.md), set up the
-builder wallet and monitoring from [docs/OPERATIONS.md](docs/OPERATIONS.md), and test the whole flow on testnet.
-Raising the fee later forces every user to approve again; the terminal explains this and walks them through it.
-
-### Use the adapter in your own app
-
-```tsx
-import { OpenChartsProvider, Terminal } from "@dylanpersonguy/opencharts";
-import { createHyperliquidAdapter } from "./hyperliquid/adapter";
-import { ComplianceGate } from "./hyperliquid/compliance";
-import { HyperliquidShell } from "./hyperliquid/ui/HyperliquidShell";
-
-const adapter = createHyperliquidAdapter(); // create once, outside render
-
-<ComplianceGate>
-  <OpenChartsProvider adapter={adapter}>
-    <HyperliquidShell>
-      <Terminal />
-    </HyperliquidShell>
-  </OpenChartsProvider>
-</ComplianceGate>;
-```
-
-`HyperliquidShell` adds the connect and deposit controls, the fee banner and the setup dialogs. Without it the
-panels still work, but nothing hosts the setup dialog, so the order ticket's **Enable trading** button does
-nothing. The Hyperliquid adapter is not part of the npm package's core entry; only its types are exported.
-
-### What the Hyperliquid terminal does differently
-
-- The order ticket shows size in base units with the USD notional, enforces each market's size precision and
-  the $10 minimum order, and shows the platform fee on both opening and closing, with a round-trip estimate.
-- Leverage and cross/isolated margin are set per market. Isolated-only markets lock the toggle.
-- Order confirmation lists notional, margin, fees and, for isolated margin, an estimated liquidation price.
-  Cross-margin liquidation depends on your whole account, so none is shown.
-- Positions show the exchange's liquidation price, funding and margin mode. Trade history shows fees including
-  the platform fee.
-- Third-party (HIP-3) markets carry a risk badge. Stocks, forex and commodities show an informational note
-  outside their usual hours: trading stays available, but the price follows an oracle that can be stale.
-- Sample-data panels (news, calendar) and the simulated depth ladder are not shown.
-
-## Adding instruments
-
-Demo instruments are defined in `src/services/demo/instruments.ts` (currently
-BTCUSD, ETHUSD, SOLUSD, BNBUSD, XRPUSD and ADAUSD). To add one:
-
-1. Add a `Symbol` entry (name, tick size, contract size, etc.).
-2. Add its trading pair to the `SYMBOLS` map in `scripts/fetch-demo-data.mjs`.
-3. Run `node scripts/fetch-demo-data.mjs` to fetch and bundle its history.
-
-## Configuration
-
-Everything works with no configuration. Optional environment variables:
-
-| Variable | Effect |
-| --- | --- |
-| `VITE_ADAPTER` | `binance` runs against live Binance prices, `hyperliquid` runs the [Hyperliquid broker](#hyperliquid-broker), `demo` forces the bundled demo |
-| `VITE_API_URL` | Base URL used by the legacy HTTP client in `src/services/api/` |
-
-**OpenCharts ships no analytics or telemetry.** Nothing leaves the browser
-except the requests your adapter makes, and the TradingView embeds below.
-
-Note that the Calendar tab and the technical-analysis gauge load TradingView's
-embed scripts from TradingView's CDN — they need no key, but they are third-party
-network requests. Drop those components if you want a strictly offline build.
-
-## Scripts
-
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the Vite dev server |
-| `npm run dev:ci` | Dev server bound to `0.0.0.0:5173` |
-| `npm run build` | Production build to `dist/` |
-| `npm run check:size` | Fail if the first-load payload exceeds its budget (run after `build`) |
-| `npm run build:lib` | Build the npm package into `dist-lib/` (fails if any CSS escapes the scope) |
-| `npm run check:package` | Verify the package matches its `exports` (run after `build:lib`) |
-| `npm run preview` | Preview the production build |
-| `npm run typecheck` | Type-check the project with `tsc` |
-| `npm run test` | Run the Vitest unit tests |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run lint` | ESLint 9 (flat config in `eslint.config.js`) |
-| `node scripts/fetch-demo-data.mjs` | Refresh bundled real OHLC |
-
-## Tech stack
-
-- **React 19** + **TypeScript 5.7** + **Vite 6**
-- **lightweight-charts 4** (+ custom plugins) for the chart
-- **Zustand** for state, **TanStack Query** for caching
-- **Tailwind CSS 3** + **Radix UI** primitives + **lucide-react** icons
-- **Zod** in `services/schemas.ts` as the shared type source (types are inferred
-  from the schemas; nothing is parsed at runtime)
-- **Vitest** + **Testing Library** for tests
-
-The published package has one peer dependency (React 18.2+) and ships ESM, type
-declarations and a precompiled stylesheet. Lint, typecheck and tests run on
-ESLint 9 (flat config, including the React Compiler rule set), TypeScript 5.7
-and Vitest.
-
-## Known limitations
-
-- **Account state is ephemeral** — positions, orders and balance reset on reload.
-  Drawings, chart preferences and templates persist via `localStorage`.
-- **Timeline is normalized** — bundled history is shifted so the latest bar is
-  "now", and the tick replay loops when it reaches the end of the 1m series.
-  OHLC values are real; the timestamps are remapped to feel live.
-- **The DOM ladder is synthetic** — real mid price, simulated depth. There is no
-  order book in the bundled data, so sizes are derived from the price level.
-- **One position per fill.** The engine is hedging-style: a buy and a sell on the
-  same symbol coexist rather than netting off.
-- **Crypto-only demo symbols** out of the box (the data source is Binance). Wire
-  your own adapter for FX, futures or equities.
-- **No news or sentiment integration.** The News tab shows labelled sample
-  items. Components that fabricated market analysis — a sentiment gauge and
-  "STRONG BUY" trade signals derived from a hash of the symbol name — were
-  deleted rather than left for someone to wire up.
-- **Replay covers roughly the last 16 hours.** The session buffer is the bundled
-  1m history for the charted symbol, so picking an earlier date reports an empty
-  session rather than inventing data.
-- **The trade calculator is still unmounted**, and challenge/risk-rule price
-  levels stay inert because the demo account reports no risk limits.
-- **Coverage is logic-first.** The paper engine, indicators, replay, journal,
-  storage, ids, live P&L and the event bus are covered, plus the order ticket
-  and positions table at the component level. The chart itself is verified by
-  driving the running app, not by unit tests. Playwright is a declared dev
-  dependency but no end-to-end specs are checked in.
-- The production `build` runs Vite only; run `npm run typecheck` separately for
-  full type checking.
+The terminal's own documentation (adapter contract, drawing tools, indicators, embedding) lives in
+[docs/TERMINAL.md](docs/TERMINAL.md).
+
+## Roadmap
+
+- Spot market support
+- More forex pairs as they are listed on Hyperliquid
+- Portfolio analytics and PnL history
+- Mobile-first layout refinements
+- Price alerts
 
 ## Contributing
 
-OpenCharts is a community project and it is open to anyone who wants to make it
-better — there is no core team you need permission from. Issues, pull requests,
-questions and design opinions are all welcome, and small first contributions are
-genuinely useful.
-
-Good places to start:
-
-- **Indicators and drawing tools** — the two most self-contained additions; see
-  [Building on OpenCharts](#building-on-opencharts).
-- **Persistence for the paper account**, so a session survives a reload.
-- **Data adapters** for other exchanges or brokers, written against the
-  `OpenChartsAdapter` contract — [`examples/binance-adapter/`](examples/binance-adapter/)
-  is the template, and the conformance suite tells you when it is right.
-- **Themes and layout customization** — the chart palette lives in
-  `pages/trading/constants.ts` and the design tokens in `tailwind.config.js`.
-- **Finishing or removing the dormant panels** listed under
-  [Known limitations](#known-limitations).
-- **Tests, docs and bug reports** — coverage is thin and every report helps.
-
-[`CONTRIBUTING.md`](CONTRIBUTING.md) covers setup, the CI gates, the layout
-of the codebase and what makes a reviewable PR. Please also read the
-[Code of Conduct](CODE_OF_CONDUCT.md), and report security issues privately via
-[`SECURITY.md`](SECURITY.md) rather than in a public issue.
-
-The one architectural rule: UI code talks to `api` and `wsClient`, never to an
-adapter or the demo layer directly, and backends plug in only through the
-`OpenChartsAdapter` contract. That is what keeps the terminal backend-agnostic.
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), run `npm test` and `npm run typecheck`
+before you open a pull request, and see [SECURITY.md](SECURITY.md) to report a vulnerability privately.
 
 ## Acknowledgements
 
-OpenCharts stands on TradingView's open-source
-[Lightweight Charts™](https://github.com/tradingview/lightweight-charts), which
-renders every chart here, and on the plugin examples shipped in that repository.
-Thank you to TradingView for releasing it under a permissive license.
+OpenBroker is built on the open-source OpenCharts trading terminal, TradingView's
+[Lightweight Charts](https://github.com/tradingview/lightweight-charts) and [Hyperliquid](https://hyperliquid.xyz).
+See [NOTICE](NOTICE) for third-party attributions.
 
 ## License
 
-OpenCharts is released under the **MIT License** — see [LICENSE](LICENSE).
+[MIT](LICENSE)
 
-It bundles TradingView's Lightweight Charts™, which is licensed under the
-**Apache License 2.0** and requires that you keep its attribution notice and a
-link to <https://www.tradingview.com/> visible to your users. That notice lives
-in [NOTICE](NOTICE) — keep it with any copy you redistribute. See
-[Built on Lightweight Charts](#built-on-lightweight-charts) for what that means
-in practice before you deploy or redistribute a fork.
+---
+
+<sub>**Keywords:** decentralized brokerage, DeFi broker, non-custodial trading platform, on-chain forex trading,
+trade stocks on-chain, commodities perpetuals, gold and oil perps, Hyperliquid trading terminal, HIP-3 markets,
+crypto perpetuals, open-source trading terminal, self-custody trading, Web3 brokerage.</sub>

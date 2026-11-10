@@ -1,4 +1,4 @@
-import { OpenChartsProvider } from "../../src/adapter/index.ts";
+import { OpenBrokerProvider } from "../../src/adapter/index.ts";
 import { createDemoAdapter } from "../../src/demo.ts";
 import {
   Chart,
@@ -21,7 +21,7 @@ import {
  */
 export function EmbeddedChartExample() {
   return (
-    <OpenChartsProvider adapter={createDemoAdapter()}>
+    <OpenBrokerProvider adapter={createDemoAdapter()}>
       <TerminalProvider>
         <div className="flex h-screen flex-col bg-background text-foreground">
           <header className="border-b border-border px-4 py-2 text-sm font-semibold">
@@ -48,6 +48,6 @@ export function EmbeddedChartExample() {
           </section>
         </div>
       </TerminalProvider>
-    </OpenChartsProvider>
+    </OpenBrokerProvider>
   );
 }

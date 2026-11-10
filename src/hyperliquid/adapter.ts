@@ -1,4 +1,4 @@
-import type { OpenChartsAdapter, StorageDriver } from "../adapter/types.ts";
+import type { OpenBrokerAdapter, StorageDriver } from "../adapter/types.ts";
 import { safeStorage } from "../lib/safe-storage.ts";
 import { isAddressBlocked } from "./compliance/screen.ts";
 import { isBuilderFeeApprovalError } from "./feeConfig.ts";
@@ -13,9 +13,9 @@ import { useHlUi } from "./ui/uiStore.ts";
  * The Hyperliquid broker adapter: market data + trading + account-scoped storage.
  *
  * ```tsx
- * <OpenChartsProvider adapter={createHyperliquidAdapter()}>
+ * <OpenBrokerProvider adapter={createHyperliquidAdapter()}>
  *   <Terminal />
- * </OpenChartsProvider>
+ * </OpenBrokerProvider>
  * ```
  *
  * Trading only works once a wallet is connected and set up (see the onboarding
@@ -104,8 +104,8 @@ export function guardBlockedAddress(
     isAddressBlocked(getAddress()) ? Promise.reject(new Error(BLOCKED_ADDRESS_MESSAGE)) : modifyOrder(id, mod);
 }
 
-export type HyperliquidAdapter = OpenChartsAdapter & { trading: HyperliquidTrading };
-export type HyperliquidMarketDataAdapter = Omit<OpenChartsAdapter, "trading">;
+export type HyperliquidAdapter = OpenBrokerAdapter & { trading: HyperliquidTrading };
+export type HyperliquidMarketDataAdapter = Omit<OpenBrokerAdapter, "trading">;
 
 export function createHyperliquidAdapter(
   opts: HyperliquidAdapterOptions & { marketDataOnly: true },
@@ -125,7 +125,7 @@ export function createHyperliquidAdapter(
   guardBuilderFeeErrors(trading);
   guardBlockedAddress(trading);
 
-  const marketData: OpenChartsAdapter["marketData"] = {
+  const marketData: OpenBrokerAdapter["marketData"] = {
     ...md,
     disconnect: () => {
       md.disconnect?.();
